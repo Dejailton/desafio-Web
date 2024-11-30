@@ -4,6 +4,7 @@ class TarefasController < ApplicationController
   # GET /tarefas or /tarefas.json
   def index
     @tarefas = Tarefa.all
+    @tarefa = Tarefa.new
   end
 
   # GET /tarefas/1 or /tarefas/1.json
@@ -25,7 +26,7 @@ class TarefasController < ApplicationController
 
     respond_to do |format|
       if @tarefa.save
-        format.html { redirect_to @tarefa, notice: "Tarefa was successfully created." }
+        format.html { redirect_to index, notice: "Tarefa was successfully created." }
         format.json { render :show, status: :created, location: @tarefa }
       else
         format.html { render :new, status: :unprocessable_entity }
