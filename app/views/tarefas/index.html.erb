@@ -1,0 +1,75 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Tarefas" %>
+
+<h1>Tarefas</h1>
+
+<div id="tarefas">
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Custo</th>
+      <th>Data limite</th>
+      <th>Ordem de apresentação</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @tarefas.each do |tarefa| %>
+    <tr>
+    <td><%= tarefa.id %></td>
+    <td><%= tarefa.name %></td>
+    <td><%= tarefa.custo %></td>
+    <td><%= tarefa.datalimite %></td>
+    <td><%= tarefa.ordem %></td>
+  <% end %>
+    </tr>
+    
+  <style>
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .table th, .table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    .table th {
+      background-color: #343a40;
+      color: white;
+      text-align: left;
+    }
+    .table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .table tr:hover {
+      background-color: #ddd;
+    }
+  </style>
+  </tbody>
+</table>
+  <style>
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .table th, .table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    .table th {
+      background-color: #343a40;
+      color: white;
+      text-align: left;
+    }
+    .table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .table tr:hover {
+      background-color: #ddd;
+    }
+  </style>
+  <%= link_to "New tarefa", new_tarefa_path %>
