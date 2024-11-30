@@ -12,4 +12,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  root "tarefas#index"
+  post "tarefas/priorize/:id(.:format)", :to => "tarefas#priorize"
 end

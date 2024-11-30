@@ -1,9 +1,9 @@
 class TarefasController < ApplicationController
-  before_action :set_tarefa, only: %i[ show edit update destroy ]
+  before_action :set_tarefa, only: %i[ show edit update destroy priorize depriorize ]
 
   # GET /tarefas or /tarefas.json
   def index
-    @tarefas = Tarefa.all
+    @tarefas = Tarefa.order("ordem")
     @tarefa = Tarefa.new
   end
 
@@ -56,6 +56,20 @@ class TarefasController < ApplicationController
       format.html { redirect_to tarefas_path, status: :see_other, notice: "Tarefa was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  #PRIORIZE /tarefas/1 or tarefas/1.json
+  def priorize
+    ordemMenor = @tarefa.ordem
+    ordemNova = ordemMenor - 1
+    @tarefa.update(ordem: ordemNova)
+    @outraTarefa = Tarefa.find_by(ordemNova)
+    ordemMaior = @outraTarefa.ordem + 1
+    @outraTarefa.update(ordem: ordemMaior)
+  end
+
+  #DEPRIORIZE /tarefas/1
+  def depriorize
   end
 
   private

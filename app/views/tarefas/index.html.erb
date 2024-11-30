@@ -2,7 +2,7 @@
 
 <% content_for :title, "Tarefas" %>
 
-<h1>Tarefas</h1>
+                          <h1>Tarefas</h1>
 
 <table class="table">
   <thead>
@@ -11,7 +11,6 @@
       <th>Nome</th>
       <th>Custo</th>
       <th>Data limite</th>
-      <th>Ordem de apresentação</th>
       <th>Função</th>
     </tr>
   </thead>
@@ -19,20 +18,41 @@
   <% @tarefas.each do |tarefa| %>
     <tr id="<%= dom_id tarefa%>">
       <%= render tarefa %>
-      <td><%= link_to "Ver mais", tarefa %></td>
+      <td>
+        <div style="display: flex">
+          <%= button_to "\u{1f5d1}", tarefa, method: :delete %> 
+          <%= link_to "\u{1f589}", edit_tarefa_path(tarefa) %> 
+          <%= button_to "priorizar", tarefa, method: :priorize %>
+          <%= button_to "adiar", tarefa, method: :depriorize %>
+        </div>
+      </td>
     </tr>
   <% end %>
-  <tr>
+</table>
+
+                      <h2>Criar nova tarefa<h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Custo</th>
+      <th>Data limite</th>
+      <th>Ordem de apresentação</th>
+      <th>Função</th>
+      </tr>
+  </thead>
+  <tbody>
+    <tr>
     <%= form_with model: @tarefa, url: "/tarefas", method: :post, local: true do |form| %>
-      <td>
-      </td>
       <td><%= form.text_field :name %></td>
       <td><%= form.number_field :custo %></td>
       <td><%= form.date_field :datalimite %></td>
-      <td><%= form.number_field :ordem %></td>
+      <td><%= form.number_field :ordem, min: 1, max: Tarefa.count + 1, step: 1, :value => Tarefa.count + 1 %></td>
       <td><%= form.submit "Create Task", input_field_name: nil %></td>
     <% end %>
-    </tr> 
+    </tr>
+  </tbody>
   <style>
     .table {
       width: 100%;
@@ -54,6 +74,4 @@
       background-color: #ddd;
     }
   </style>
-  </tbody>
 </table>
-  <%= link_to "New tarefa", new_tarefa_path %>
