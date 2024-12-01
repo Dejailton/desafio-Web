@@ -26,10 +26,6 @@
     <%= form.date_field :datalimite %>
   </div>
 
-  <div>
-    <%= form.label :ordem, style: "display: block" %>
-    <%= form.number_field :ordem, min: 1, max: Tarefa.count + 1, step: 1, :value => "1" %>
-  </div>
 
   <div>
     <%= form.submit %>

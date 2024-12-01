@@ -4,6 +4,7 @@ class TarefasController < ApplicationController
   # GET /tarefas or /tarefas.json
   def index
     @tarefas = Tarefa.order("ordem")
+    @tarefasall = Tarefa.all
     @tarefa = Tarefa.new
   end
 
@@ -13,7 +14,7 @@ class TarefasController < ApplicationController
 
   # GET /tarefas/new
   def new
-    @tarefa = Tarefa.new
+    @tarefa = Tarefa.new(tarefa_parms)
   end
 
   # GET /tarefas/1/edit
@@ -22,11 +23,14 @@ class TarefasController < ApplicationController
 
   # POST /tarefas or /tarefas.json
   def create
-    @tarefa = Tarefa.new(tarefa_params)
-
+    if @tarefa = Tarefa.new(tarefa_params)
+      @tarefa.ordem = Tarefa.count + 1
+    else 
+      @tarefa.ordem = Tarefa.count
+    end
     respond_to do |format|
       if @tarefa.save
-        format.html { redirect_to index, notice: "Tarefa was successfully created." }
+        format.html { redirect_to index, notice: "Tarefa was created successfully" }
         format.json { render :show, status: :created, location: @tarefa }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +43,7 @@ class TarefasController < ApplicationController
   def update
     respond_to do |format|
       if @tarefa.update(tarefa_params)
-        format.html { redirect_to @tarefa, notice: "Tarefa was successfully updated." }
+        format.html { redirect_to @tarefa, notice: "Tarefa was updated successfully!" }
         format.json { render :show, status: :ok, location: @tarefa }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,22 +54,20 @@ class TarefasController < ApplicationController
 
   # DELETE /tarefas/1 or /tarefas/1.json
   def destroy
+    @tarefaordem = @tarefa.ordem
+    @tarefasall.each do |tarefa|
+      tarefa.where("ordem > @tarefaordem").order("ordem desc")  
+    end
     @tarefa.destroy!
-
     respond_to do |format|
-      format.html { redirect_to tarefas_path, status: :see_other, notice: "Tarefa was successfully destroyed." }
+      format.html { redirect_to tarefas_path, status: :see_other, notice: "Tarefa was deleted with sucessfully!" }
       format.json { head :no_content }
     end
   end
 
   #PRIORIZE /tarefas/1 or tarefas/1.json
   def priorize
-    ordemMenor = @tarefa.ordem
-    ordemNova = ordemMenor - 1
-    @tarefa.update(ordem: ordemNova)
-    @outraTarefa = Tarefa.find_by(ordemNova)
-    ordemMaior = @outraTarefa.ordem + 1
-    @outraTarefa.update(ordem: ordemMaior)
+    
   end
 
   #DEPRIORIZE /tarefas/1
