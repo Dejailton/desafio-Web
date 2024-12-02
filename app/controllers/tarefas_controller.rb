@@ -77,10 +77,10 @@ class TarefasController < ApplicationController
     end
     if position == 2
       tarefafirst.update(ordem: 1000)
-      if position = 2
+      if position == 2
         tarefatwo.update(ordem: 1)
       end
-      if tarefafirst.ordem = 1000
+      if tarefafirst.ordem == 1000
         tarefafirst.update(ordem: 2) 
       end 
     else position == 1
@@ -98,6 +98,25 @@ class TarefasController < ApplicationController
 
   #DEPRIORIZE /tarefas/1
   def depriorize
+    tarefalast = Terafa.find(params[:id])
+    position = tarefalas.ordem
+    lasposition = Tarefa.count
+    tarefapanultimate = Tarefa.count - 1
+    tarefanewlast = Tarefa.find(parms[tarefapanultimate])
+    if position == lasposition
+      respond_to do |format|
+        format.htmal { redirect_to tarefas_path, notice: "Tarefa is already in final order" }
+      end
+    end
+    if position == tarefapenultimate
+      tarefalast.update(ordem: 1000)
+      if position == tarefapenultimate
+        tarefanewlast.update(ordem: position)
+      end
+      if tarefalast.ordem == 1000
+        tarefalast.update(ordem: position)
+      end
+    end
   end
 
   private

@@ -1,5 +1,4 @@
 <td><%= tarefa.id %></td>
 <td><%= tarefa.name %></td>
-<td style="background-color:<%= tarefa.custo > 1000 ? "yellow" : "white" %>"><%= tarefa.custo %></td>
+<td style="background-color:<%= tarefa.custo >= 1000 ? "yellow" : "white" %>"><%= tarefa.custo %></td>
 <td><%= tarefa.datalimite %></td>
-<td><%= tarefa.ordem %></td>
