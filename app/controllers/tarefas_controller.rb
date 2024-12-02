@@ -1,10 +1,9 @@
 class TarefasController < ApplicationController
-  before_action :set_tarefa, only: %i[ show edit update destroy priorize depriorize ]
+  before_action :set_tarefa, only: %i[ show edit update destroy ]
 
   # GET /tarefas or /tarefas.json
   def index
     @tarefas = Tarefa.order("ordem")
-    @tarefasall = Tarefa.all
     @tarefa = Tarefa.new
   end
 
@@ -43,7 +42,7 @@ class TarefasController < ApplicationController
   def update
     respond_to do |format|
       if @tarefa.update(tarefa_params)
-        format.html { redirect_to @tarefa, notice: "Tarefa was updated successfully!" }
+        format.html { redirect_to index, notice: "Tarefa was updated successfully!" }
         format.json { render :show, status: :ok, location: @tarefa }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,10 +53,6 @@ class TarefasController < ApplicationController
 
   # DELETE /tarefas/1 or /tarefas/1.json
   def destroy
-    @tarefaordem = @tarefa.ordem
-    @tarefasall.each do |tarefa|
-      tarefa.where("ordem > @tarefaordem").order("ordem desc")  
-    end
     @tarefa.destroy!
     respond_to do |format|
       format.html { redirect_to tarefas_path, status: :see_other, notice: "Tarefa was deleted with sucessfully!" }
@@ -67,7 +62,38 @@ class TarefasController < ApplicationController
 
   #PRIORIZE /tarefas/1 or tarefas/1.json
   def priorize
-    
+    tarefaone= Tarefa.find(params[:id])
+    position = tarefaone.ordem  
+    tarefafirst = Tarefa.find_by(ordem: 1)
+    tarefatwo = Tarefa.find_by(ordem: 2)
+    if position > 2 
+      Tarefa.where("ordem > ? ", tarefaone.ordem).each do |task1000|
+        #task1000.update(ordem: task1000.ordem + 1)
+        #Tarefa.where("ordem > ?", tarefaone.ordem).each do |task|
+         # @taskedit = task.ordem - 1 
+          #task.update(ordem: @taskedit)
+        #end
+      end
+    end
+    if position == 2
+      tarefafirst.update(ordem: 1000)
+      if position = 2
+        tarefatwo.update(ordem: 1)
+      end
+      if tarefafirst.ordem = 1000
+        tarefafirst.update(ordem: 2) 
+      end 
+    else position == 1
+     respond_to do |format| 
+      format.html { redirect_to tarefas_path, notice: "Tarefa has order equals 1!" }
+     end
+    end
+    if position == 1
+      return
+    end
+    respond_to do |format|
+      format.html { redirect_to tarefas_path, notice: "Tarefa has been prioritized!" }
+    end
   end
 
   #DEPRIORIZE /tarefas/1

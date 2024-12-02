@@ -2,7 +2,7 @@
 
 <% content_for :title, "Tarefas" %>
 
-                          <h1>Tarefas:</h1>
+<h1><font size="20px"><center>Tarefas:</center></font></h1>
 
 <table class="table">
   <thead>
@@ -31,8 +31,9 @@
   <% end %>
 </table>
 
-                      <h2>Criar nova tarefa:<h2>
+<h2><font size="20px"><center>Criar nova tarefa:</center></font><h2>
 
+<%= form_with model: @tarefa, url: "/tarefas", method: :post, remote: true do |form| %>
 <table class="table">
   <thead>
     <tr>
@@ -43,14 +44,13 @@
       </tr>
   </thead>
   <tbody>
-    <tr>
-    <%= form_with model: @tarefa, url: tarefas_path, method: :post do |form| %>
+      <tr>
       <td><%= form.text_field :name %></td>
       <td><%= form.number_field :custo %></td>
       <td><%= form.date_field :datalimite %></td>
       <td><%= form.submit "Create Task" %></td>
     <% end %>
-    </tr>
+      </tr>
   </tbody>
   <style>
     .table {
@@ -60,11 +60,12 @@
     .table th, .table td {
       border: 1px solid #ddd;
       padding: 8px;
+      text-align: center;
     }
     .table th {
       background-color: #343a40;
       color: white;
-      text-align: left;
+      text-align: center;
     }
     .table tr:nth-child(even) {
       background-color: #f2f2f2;
