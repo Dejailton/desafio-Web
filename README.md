@@ -6,7 +6,7 @@ Passo a passo para inicializar utilizando o docker:
 
 1. deve ser criado uma pasta com o nome "testeFatto" e dentro dela outra pasta com o nome "SiteWeb", ocasionando o diretório: /testeFatto/SiteWeb
 
-2. Após realizar o push através do git na pasta com o caminho correto, deve ser executado o seguinte comando:
+2. Após realizar o download do repositório através do git na pasta com o caminho correto, deve ser executado o seguinte comando:
 
 docker compose up --detach((execução de comando em segundo plano) (Caso demore para realizar a conexão, execute o comando novamente e aguarde))
 
