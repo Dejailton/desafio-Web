@@ -8,7 +8,9 @@ Passo a passo para inicializar utilizando o docker:
 
 2. Após realizar o push através do git na pasta com o caminho correto, deve ser executado o seguinte comando:
 
-docker compose up --detach
+docker compose up --detach((execução de comando em segundo plano) (Caso demore para realizar a conexão, execute o comando novamente e aguarde))
+
+docker compose up (execução no terminal.)
 
 3. Acessar o "http://localhost:3000/".
 
