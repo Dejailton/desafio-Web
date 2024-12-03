@@ -1,0 +1,10 @@
+services: 
+  siteweb:
+    container_name: testeFatto 
+    image: rails:latest
+    build:
+      context: .
+    ports: 
+      - 3000:3000
+    volumes:
+      - .:/testeFatto/SiteWeb
